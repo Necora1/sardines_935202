@@ -6,27 +6,19 @@ using namespace std;
 // Lab 09
 
 
-
-int lengcharr(char charArray[]) {
-
-    int length = 0;
-    char *ptr = charArray;
-    for (; *ptr != '\0'; ptr++) {
-
-        length++;
-    }
-    return length;
-}
-
 int main() {
     // Упражнения 1–3: демонстрация/анализ строковых функций (без ввода).
     // Использование 3х функций C++ для string/char
     string s = "Testing";
     char str[] = "Testing";
+    char str2[] = "Real";
+    char str3[100];
     cout << "Длина строки: " << s.length() << endl;
     cout << "Проверка пустая ли строка или нет: " << s.empty() << endl;
     cout << "Последний символ строки: " << s.back() << endl;
-    cout << "Длина массива char: " << lengcharr(str) << endl;
+    cout << "Длина массива элементов: " << sizeof(str)-1 << endl;
+    cout << "Склеивание двух массивов элементов: " << strcat(str2,str) << endl;
+    cout << "Сравнение двух строк: больше ли \"Testing\" чем \"Real\"?: " << strcmp(str,str2) << endl;
 
    
     // (2)Объяснение использование типов, переменных и констант, а также, что будет напечатано в итоге
@@ -63,19 +55,26 @@ int main() {
     
     int maxLength = 10;
     int maxWords = 20;
-    int wordsCountedd = 0;
+    int amountOfWords = 0;
     int pos = 0;
-    string initArr[20];
+    int wordsCountedd = 0;
     string word;
 
-    for(;wordsCountedd < maxWords;) {
-        cout << "Type a word, or type /end to stop forming an array: " << endl;
+    cout << "Type amount of words(Less than 20) to insert into array: ";
+    cin >> amountOfWords;
+    
+    if (amountOfWords > maxWords) exit(1);
+    string wordsArr[amountOfWords];
+
+    for(;;) {
+
+        if (wordsCountedd == amountOfWords) break;
+        cout << "Type a word: " << endl;
         cin >> word;
-        if (word == "/end") break;
 
         if (word.length() <= maxLength) {
 
-            initArr[pos] = word;
+            wordsArr[pos] = word;
             pos++;
             wordsCountedd++;
 
@@ -83,73 +82,43 @@ int main() {
             exit(1);
          }
      }
-
-    pos = 0;
-    string wordsArr[wordsCountedd];
-    for (int i = 0;;pos++, i++) {
-        wordsArr[pos] = initArr[i];
-
-        if (pos == wordsCountedd) break;
-    }
-    cout << "Finished forming an array" << endl;
-    cout <<  "Array: ";
     
-    for (pos = 0;pos <= wordsCountedd; pos++) {
+    
+    cout << "Finished forming an array" << endl;
+    cout <<  "Array(Only even words): ";
+    
+    for (pos = 1;pos <= wordsCountedd; pos+=2) {
 
         cout << wordsArr[pos] << " ";
     }
+
     cout << endl;
 
-    char cArray[20][10];
-    int wordsCounted = 0;
-    int cPos = 0;
-    int currWordSize = 0;
-    int currWordSize2 = 0;
-    int flag = 0;
+    pos = 0;
+    amountOfWords = 0;
+    int currentWord = 0;
+    int sizeofcurr = 0;
+    cout << "Type amount of words(Less than 20) to insert into array: ";
+    cin >> amountOfWords;
 
-    char cWord[] = "";
-     for(;wordsCounted < maxWords;) {
-        cout << "Type a word, or type - to stop forming an array: " << endl;
-        cin >> cWord;
-        
-        for (int i = 0; i < sizeof(cWord); i++) {
+    if (amountOfWords > maxWords) exit(1);
 
-            if (cWord[i] == '-') flag = 1;
-        }
+    char cArray[amountOfWords][11];
 
-        if (flag == 1) break;
-        if (sizeof(cWord) <= maxLength) {
-
-            for (int i = 0;i <= sizeof(cWord);) {
-                
-                cArray[cPos][i] = cWord[i];
-                wordsCounted++;
-            }
-            currWordSize = sizeof(cWord);
-            int i = currWordSize;
-            memset(cWord, 0, sizeof(cWord));
-
-        } else {
-            exit(1);
-         }
-
-        cPos++;
+    for(currentWord = 0;;) {
+        if (currentWord == amountOfWords) break;
+        cout << "Type a word: " << endl;
+        cin >> cArray[currentWord];
+        currentWord++;
      }
 
-     cout << "printing array: ";
+    cout << "Finished forming an array" << endl;
+    cout <<  "Array(Only even words): ";
 
-     cPos = 0;
-     int i = 0;
-     char *ptr;
-     for (;cPos <= wordsCounted;) {
-        ptr = cArray[cPos];
-        while(*ptr != '\0') {
+    for (pos = 1;pos <= currentWord; pos+=2) {
 
-            cout << cArray[cPos][i];
-            i++;
-        }
+        cout << cArray[pos];
         cout << " ";
-        ptr++;
-     }
-
+    }
+    cout << endl;
 }
